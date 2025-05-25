@@ -27,64 +27,30 @@
 
     <!-- Kanban Columns -->
     <div class="row g-4">
-      <div class="col-md-4">
-        <div class="bg-light rounded-3 p-3 h-100">
-          <h3 class="h5 mb-3">Backlog</h3>
-          <draggable 
-            v-model="backlog" 
-            group="tasks"
-            class="min-vh-100"
-            item-key="id"
-            @change="onChange"
-          >
-            <template #item="{ element }">
-              <TaskCard :task="element" />
-            </template>
-          </draggable>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="bg-light rounded-3 p-3 h-100">
-          <h3 class="h5 mb-3">In Progress</h3>
-          <draggable 
-            v-model="inProgress" 
-            group="tasks"
-            class="min-vh-100"
-            item-key="id"
-            @change="onChange"
-          >
-            <template #item="{ element }">
-              <TaskCard :task="element" />
-            </template>
-          </draggable>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="bg-light rounded-3 p-3 h-100">
-          <h3 class="h5 mb-3">Done</h3>
-          <draggable 
-            v-model="done" 
-            group="tasks"
-            class="min-vh-100"
-            item-key="id"
-            @change="onChange"
-          >
-            <template #item="{ element }">
-              <TaskCard :task="element" />
-            </template>
-          </draggable>
-        </div>
-      </div>
+      <KanbanColumn
+        title="Backlog"
+        v-model:tasks="backlog"
+        @change="onChange"
+      />
+      
+      <KanbanColumn
+        title="In Progress"
+        v-model:tasks="inProgress"
+        @change="onChange"
+      />
+      
+      <KanbanColumn
+        title="Done"
+        v-model:tasks="done"
+        @change="onChange"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import draggable from 'vuedraggable'
-import TaskCard from './TaskCard.vue'
+import KanbanColumn from './KanbanColumn.vue'
 
 // Task state
 const backlog = ref([])
