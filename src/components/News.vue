@@ -78,6 +78,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Pagination from './Pagination.vue'
+import { getUrl } from '../utils/url'
 
 const news = ref([])
 const search = ref('')
@@ -87,7 +88,7 @@ const currentPage = ref(1)
 const itemsPerPage = 6
 
 onMounted(async () => {
-  const response = await fetch('/news.json')
+  const response = await fetch(getUrl('news.json'))
   const data = await response.json()
   news.value = data.news
 })
