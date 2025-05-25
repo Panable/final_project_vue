@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{\PYGZlt{}!\PYGZhy{}\PYGZhy{} src/components/Register.vue (template, abbreviated for focus) \PYGZhy{}\PYGZhy{}\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{form} \PYG{p}{@}\PYG{n+na}{submit}\PYG{p}{.}\PYG{n+na}{prevent}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{handleSubmit}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}form\PYGZhy{}control\PYGZdq{}} \PYG{n+na}{v\PYGZhy{}model}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{username}\PYG{l+s}{\PYGZdq{}} \PYG{n+na}{required}\PYG{p}{\PYGZgt{}}
+  ...
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}form\PYGZhy{}control\PYGZdq{}} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}email\PYGZdq{}} \PYG{n+na}{v\PYGZhy{}model}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{email}\PYG{l+s}{\PYGZdq{}} \PYG{n+na}{required}\PYG{p}{\PYGZgt{}}
+  ...
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{select} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}form\PYGZhy{}select\PYGZdq{}} \PYG{n+na}{v\PYGZhy{}model}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{role}\PYG{l+s}{\PYGZdq{}} \PYG{n+na}{required}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{option} \PYG{n+na}{value}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}user\PYGZdq{}}\PYG{p}{\PYGZgt{}}User\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{option}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{option} \PYG{n+na}{value}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}admin\PYGZdq{}}\PYG{p}{\PYGZgt{}}Admin\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{option}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{select}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{button} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}submit\PYGZdq{}} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}btn btn\PYGZhy{}primary w\PYGZhy{}100\PYGZdq{}}\PYG{p}{\PYGZgt{}}Register\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{button}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{form}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{v\PYGZhy{}if}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{message}\PYG{l+s}{\PYGZdq{}} \PYG{p}{:}\PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}alert\PYGZsq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{messageType}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}mt\PYGZhy{}3\PYGZsq{}}\PYG{p}{]}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+  \PYG{c+cp}{\PYGZob{}\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{message}\PYG{+w}{ }\PYG{c+cp}{\PYGZcb{}\PYGZcb{}}
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+\end{Verbatim}

@@ -361,6 +361,129 @@ try {
             }
             exit();
         }
+
+        // Handle cards CRUD operations
+        if (is_logged_in()) {
+            // Get all cards for current user
+            if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'cards') {
+                $sql = "SELECT * FROM cards WHERE user_id = ? ORDER BY id DESC";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $_SESSION['user_id']);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                
+                $cards = [];
+                while ($row = $result->fetch_assoc()) {
+                    $cards[] = $row;
+                }
+                
+                echo json_encode(["success" => true, "cards" => $cards]);
+                exit();
+            }
+
+            // Create card
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($data['action']) && $data['action'] === 'create_card') {
+                if (!isset($data['title']) || !isset($data['column'])) {
+                    throw new Exception("Missing title or column");
+                }
+
+                $title = $conn->real_escape_string($data['title']);
+                $column = $conn->real_escape_string($data['column']);
+                $tag = isset($data['tag']) ? $conn->real_escape_string($data['tag']) : null;
+                $user_id = $_SESSION['user_id'];
+
+                $sql = "INSERT INTO cards (user_id, title, tag, `column`) VALUES (?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("isss", $user_id, $title, $tag, $column);
+
+                if ($stmt->execute()) {
+                    $card_id = $conn->insert_id;
+                    echo json_encode([
+                        "success" => true,
+                        "message" => "Card created successfully",
+                        "card" => [
+                            "id" => $card_id,
+                            "user_id" => $user_id,
+                            "title" => $title,
+                            "tag" => $tag,
+                            "column" => $column
+                        ]
+                    ]);
+                } else {
+                    throw new Exception("Failed to create card: " . $stmt->error);
+                }
+                exit();
+            }
+
+            // Update card
+            if ($_SERVER['REQUEST_METHOD'] === 'PUT' && isset($data['action']) && $data['action'] === 'update_card') {
+                if (!isset($data['id']) || !isset($data['title']) || !isset($data['column'])) {
+                    throw new Exception("Missing required fields");
+                }
+
+                $id = (int)$data['id'];
+                $title = $conn->real_escape_string($data['title']);
+                $column = $conn->real_escape_string($data['column']);
+                $tag = isset($data['tag']) ? $conn->real_escape_string($data['tag']) : null;
+                $user_id = $_SESSION['user_id'];
+
+                // Verify card belongs to user
+                $check_sql = "SELECT id FROM cards WHERE id = ? AND user_id = ?";
+                $check_stmt = $conn->prepare($check_sql);
+                $check_stmt->bind_param("ii", $id, $user_id);
+                $check_stmt->execute();
+                if ($check_stmt->get_result()->num_rows === 0) {
+                    throw new Exception("Card not found or unauthorized");
+                }
+
+                $sql = "UPDATE cards SET title = ?, tag = ?, `column` = ? WHERE id = ? AND user_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("sssii", $title, $tag, $column, $id, $user_id);
+
+                if ($stmt->execute()) {
+                    echo json_encode([
+                        "success" => true,
+                        "message" => "Card updated successfully"
+                    ]);
+                } else {
+                    throw new Exception("Failed to update card: " . $stmt->error);
+                }
+                exit();
+            }
+
+            // Delete card
+            if ($_SERVER['REQUEST_METHOD'] === 'DELETE' && isset($_GET['action']) && $_GET['action'] === 'delete_card') {
+                if (!isset($_GET['id'])) {
+                    throw new Exception("Missing card ID");
+                }
+
+                $id = (int)$_GET['id'];
+                $user_id = $_SESSION['user_id'];
+
+                // Verify card belongs to user
+                $check_sql = "SELECT id FROM cards WHERE id = ? AND user_id = ?";
+                $check_stmt = $conn->prepare($check_sql);
+                $check_stmt->bind_param("ii", $id, $user_id);
+                $check_stmt->execute();
+                if ($check_stmt->get_result()->num_rows === 0) {
+                    throw new Exception("Card not found or unauthorized");
+                }
+
+                $sql = "DELETE FROM cards WHERE id = ? AND user_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ii", $id, $user_id);
+
+                if ($stmt->execute()) {
+                    echo json_encode([
+                        "success" => true,
+                        "message" => "Card deleted successfully"
+                    ]);
+                } else {
+                    throw new Exception("Failed to delete card: " . $stmt->error);
+                }
+                exit();
+            }
+        }
     }
 
     // If no valid action

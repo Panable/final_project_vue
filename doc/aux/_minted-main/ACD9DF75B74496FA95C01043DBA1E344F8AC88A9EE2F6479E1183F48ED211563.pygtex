@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{x}{// public/api.php (excerpt)}
+\PYG{x}{header(\PYGZdq{}Content\PYGZhy{}Type: application/json\PYGZdq{});}
+\PYG{x}{\PYGZdl{}data = json\PYGZus{}decode(file\PYGZus{}get\PYGZus{}contents(\PYGZdq{}php://input\PYGZdq{}), true);}
+\PYG{x}{// DB connection and logic here}
+\PYG{x}{echo json\PYGZus{}encode([\PYGZdq{}success\PYGZdq{} =\PYGZgt{} true]);}
+\end{Verbatim}

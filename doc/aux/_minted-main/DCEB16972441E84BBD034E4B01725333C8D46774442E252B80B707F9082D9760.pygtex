@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{\PYGZlt{}!\PYGZhy{}\PYGZhy{} src/components/Navbar.vue \PYGZhy{}\PYGZhy{}\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{ul} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}navbar\PYGZhy{}nav me\PYGZhy{}auto\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+  ...
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{li} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}nav\PYGZhy{}item\PYGZdq{}} \PYG{n+na}{v\PYGZhy{}if}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{isLoggedIn}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{router\PYGZhy{}link} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}nav\PYGZhy{}link\PYGZdq{}} \PYG{n+na}{to}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}/kanban\PYGZdq{}}\PYG{p}{\PYGZgt{}}Kanban\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{router\PYGZhy{}link}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{li}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{ul}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{script} \PYG{n+na}{setup}\PYG{p}{\PYGZgt{}}
+\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{isLoggedIn}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{ref}\PYG{p}{(}\PYG{k+kc}{false}\PYG{p}{);}
+\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{isAdmin}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{ref}\PYG{p}{(}\PYG{k+kc}{false}\PYG{p}{);}
+\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{checkAuthStatus}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{async}\PYG{+w}{ }\PYG{p}{()}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{response}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{await}\PYG{+w}{ }\PYG{n+nx}{fetch}\PYG{p}{(}\PYG{l+s+sb}{`}\PYG{l+s+si}{\PYGZdl{}\PYGZob{}}\PYG{n+nx}{getUrl}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}api.php\PYGZsq{}}\PYG{p}{)}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+sb}{?action=current\PYGZus{}user`}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n+nx}{credentials}\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}include\PYGZsq{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{})}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{data}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{await}\PYG{+w}{ }\PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{json}\PYG{p}{()}
+\PYG{+w}{  }\PYG{n+nx}{isLoggedIn}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{!!}\PYG{n+nx}{data}\PYG{p}{.}\PYG{n+nx}{user}
+\PYG{+w}{  }\PYG{n+nx}{isAdmin}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{data}\PYG{p}{.}\PYG{n+nx}{user}\PYG{o}{?}\PYG{p}{.}\PYG{n+nx}{role}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}admin\PYGZsq{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{script}\PYG{p}{\PYGZgt{}}
+\end{Verbatim}

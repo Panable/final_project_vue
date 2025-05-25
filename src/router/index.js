@@ -5,6 +5,8 @@ import Register from '../components/Register.vue'
 import News from '../components/News.vue'
 import Posts from '../components/Posts.vue'
 import About from '../components/About.vue'
+import Kanban from '../components/Kanban.vue'
+import Apply from '../components/Apply.vue'
 import { getUrl } from '../utils/url'
 
 const router = createRouter({
@@ -31,6 +33,11 @@ const router = createRouter({
       component: News
     },
     {
+      path: '/apply',
+      name: 'apply',
+      component: Apply
+    },
+    {
       path: '/about',
       name: 'about',
       component: About
@@ -39,6 +46,12 @@ const router = createRouter({
       path: '/posts',
       name: 'posts',
       component: Posts,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/kanban',
+      name: 'kanban',
+      component: Kanban,
       meta: { requiresAuth: true }
     }
   ]

@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// src/components/Apply.vue}
+\PYG{k+kd}{function}\PYG{+w}{ }\PYG{n+nx}{validateForm}\PYG{p}{()}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{n+nx}{errors}\PYG{p}{.}\PYG{n+nx}{firstName}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+sr}{/\PYGZca{}[A\PYGZhy{}Za\PYGZhy{}z]+\PYGZdl{}/}\PYG{p}{.}\PYG{n+nx}{test}\PYG{p}{(}\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{firstName}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}First Name must contain only letters\PYGZsq{}}
+\PYG{+w}{  }\PYG{p}{...}
+\PYG{+w}{  }\PYG{n+nx}{errors}\PYG{p}{.}\PYG{n+nx}{dob}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{dob}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{p}{(}\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nb}{Date}\PYG{p}{().}\PYG{n+nx}{getFullYear}\PYG{p}{()}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nb}{Date}\PYG{p}{(}\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{dob}\PYG{p}{).}\PYG{n+nx}{getFullYear}\PYG{p}{())}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mf}{16}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}You must be at least 16 years old\PYGZsq{}}
+\PYG{+w}{  }\PYG{n+nx}{errors}\PYG{p}{.}\PYG{n+nx}{category}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{category}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}Please select a category\PYGZsq{}}
+\PYG{+w}{  }\PYG{k}{return}\PYG{+w}{ }\PYG{n+nb}{Object}\PYG{p}{.}\PYG{n+nx}{values}\PYG{p}{(}\PYG{n+nx}{errors}\PYG{p}{).}\PYG{n+nx}{every}\PYG{p}{(}\PYG{n+nx}{e}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{o}{!}\PYG{n+nx}{e}\PYG{p}{)}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

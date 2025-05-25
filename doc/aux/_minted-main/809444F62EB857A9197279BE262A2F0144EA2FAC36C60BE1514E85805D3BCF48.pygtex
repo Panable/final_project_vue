@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{import}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{fileURLToPath}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{URL}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k+kr}{from}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}node:url\PYGZdq{}}\PYG{p}{;}
+\PYG{k}{import}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{defineConfig}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k+kr}{from}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}vite\PYGZdq{}}\PYG{p}{;}
+\PYG{k}{import}\PYG{+w}{ }\PYG{n+nx}{vue}\PYG{+w}{ }\PYG{k+kr}{from}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}@vitejs/plugin\PYGZhy{}vue\PYGZdq{}}\PYG{p}{;}
+\PYG{k}{import}\PYG{+w}{ }\PYG{n+nx}{vueDevTools}\PYG{+w}{ }\PYG{k+kr}{from}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}vite\PYGZhy{}plugin\PYGZhy{}vue\PYGZhy{}devtools\PYGZdq{}}\PYG{p}{;}
+\PYG{k}{export}\PYG{+w}{ }\PYG{k}{default}\PYG{+w}{ }\PYG{n+nx}{defineConfig}\PYG{p}{((\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{mode}\PYG{+w}{ }\PYG{p}{\PYGZcb{})}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k}{return}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n+nx}{base}\PYG{o}{:}\PYG{+w}{ }\PYG{n+nx}{mode}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}production\PYGZdq{}}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}/cos30043/s103866373/project\PYGZdq{}}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}/\PYGZdq{}}\PYG{p}{,}
+\PYG{+w}{    }\PYG{n+nx}{plugins}\PYG{o}{:}\PYG{+w}{ }\PYG{p}{[}\PYG{n+nx}{vue}\PYG{p}{(),}\PYG{+w}{ }\PYG{n+nx}{vueDevTools}\PYG{p}{()],}
+\PYG{+w}{    }\PYG{n+nx}{resolve}\PYG{o}{:}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n+nx}{alias}\PYG{o}{:}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{l+s+s2}{\PYGZdq{}@\PYGZdq{}}\PYG{o}{:}\PYG{+w}{ }\PYG{n+nx}{fileURLToPath}\PYG{p}{(}\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+nx}{URL}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}./src\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{import}\PYG{p}{.}\PYG{n+nx}{meta}\PYG{p}{.}\PYG{n+nx}{url}\PYG{p}{)),}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{},}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{},}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{};}
+\PYG{p}{\PYGZcb{});}
+\end{Verbatim}

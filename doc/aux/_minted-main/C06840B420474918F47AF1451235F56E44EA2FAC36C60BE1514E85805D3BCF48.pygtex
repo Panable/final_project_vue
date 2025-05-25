@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// src/router/index.js}
+\PYG{n+nx}{router}\PYG{p}{.}\PYG{n+nx}{beforeEach}\PYG{p}{(}\PYG{k}{async}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{to}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kr}{from}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{next}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{to}\PYG{p}{.}\PYG{n+nx}{meta}\PYG{p}{.}\PYG{n+nx}{requiresAuth}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{try}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{response}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{await}\PYG{+w}{ }\PYG{n+nx}{fetch}\PYG{p}{(}\PYG{l+s+sb}{`}\PYG{l+s+si}{\PYGZdl{}\PYGZob{}}\PYG{n+nx}{getUrl}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}api.php\PYGZsq{}}\PYG{p}{)}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+sb}{?action=current\PYGZus{}user`}\PYG{p}{)}
+\PYG{+w}{      }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{data}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{await}\PYG{+w}{ }\PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{json}\PYG{p}{()}
+\PYG{+w}{      }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{data}\PYG{p}{.}\PYG{n+nx}{user}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nx}{next}\PYG{p}{()}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nx}{next}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}/login\PYGZsq{}}\PYG{p}{)}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{catch}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{error}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n+nx}{next}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}/login\PYGZsq{}}\PYG{p}{)}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n+nx}{next}\PYG{p}{()}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{})}
+\end{Verbatim}

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// src/components/Posts.vue (admin check)}
+\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{response}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{await}\PYG{+w}{ }\PYG{n+nx}{fetch}\PYG{p}{(}\PYG{l+s+sb}{`}\PYG{l+s+si}{\PYGZdl{}\PYGZob{}}\PYG{n+nx}{API\PYGZus{}URL}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+sb}{?action=current\PYGZus{}user`}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{n+nx}{credentials}\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}include\PYGZsq{}}
+\PYG{p}{\PYGZcb{})}
+\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{data}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{await}\PYG{+w}{ }\PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{json}\PYG{p}{()}
+\PYG{n+nx}{isAdmin}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{data}\PYG{p}{.}\PYG{n+nx}{user}\PYG{o}{?}\PYG{p}{.}\PYG{n+nx}{role}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}admin\PYGZsq{}}
+\end{Verbatim}

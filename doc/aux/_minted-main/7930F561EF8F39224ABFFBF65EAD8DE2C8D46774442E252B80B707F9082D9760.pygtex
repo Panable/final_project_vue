@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{\PYGZlt{}!\PYGZhy{}\PYGZhy{} src/components/Kanban.vue \PYGZhy{}\PYGZhy{}\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{draggable}
+  \PYG{n+na}{v\PYGZhy{}model}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{todoCards}\PYG{l+s}{\PYGZdq{}}
+  \PYG{n+na}{group}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}cards\PYGZdq{}}
+  \PYG{p}{@}\PYG{n+na}{change}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{onChange}\PYG{l+s}{\PYGZdq{}}
+  \PYG{n+na}{item\PYGZhy{}key}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}id\PYGZdq{}}
+  \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}min\PYGZhy{}height\PYGZdq{}}
+\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{template} \PYG{err}{\PYGZsh{}}\PYG{n+na}{item}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}\PYGZob{} element \PYGZcb{}\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}card mb\PYGZhy{}2\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+      \PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}card\PYGZhy{}body\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{h5} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}card\PYGZhy{}title\PYGZdq{}}\PYG{p}{\PYGZgt{}}\PYG{c+cp}{\PYGZob{}\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{element}\PYG{p}{.}\PYG{n+nx}{title}\PYG{+w}{ }\PYG{c+cp}{\PYGZcb{}\PYGZcb{}}\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{h5}\PYG{p}{\PYGZgt{}}
+        \PYG{p}{\PYGZlt{}}\PYG{n+nt}{span} \PYG{n+na}{v\PYGZhy{}if}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{element}\PYG{p}{.}\PYG{n+nx}{tag}\PYG{l+s}{\PYGZdq{}} \PYG{p}{:}\PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{getTagClass}\PYG{p}{(}\PYG{n+nx}{element}\PYG{p}{.}\PYG{n+nx}{tag}\PYG{p}{)}\PYG{l+s}{\PYGZdq{}} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}badge mb\PYGZhy{}2\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+          \PYG{c+cp}{\PYGZob{}\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{element}\PYG{p}{.}\PYG{n+nx}{tag}\PYG{+w}{ }\PYG{c+cp}{\PYGZcb{}\PYGZcb{}}
+        \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{span}\PYG{p}{\PYGZgt{}}
+      \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{template}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{draggable}\PYG{p}{\PYGZgt{}}
+\end{Verbatim}

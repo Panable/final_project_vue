@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{paginatedNews}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{computed}\PYG{p}{(()}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{start}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{currentPage}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mf}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n+nx}{itemsPerPage}
+\PYG{+w}{  }\PYG{k}{return}\PYG{+w}{ }\PYG{n+nx}{filteredNews}\PYG{p}{.}\PYG{n+nx}{value}\PYG{p}{.}\PYG{n+nx}{slice}\PYG{p}{(}\PYG{n+nx}{start}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{start}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n+nx}{itemsPerPage}\PYG{p}{)}
+\PYG{p}{\PYGZcb{})}
+
+\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{filteredNews}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{computed}\PYG{p}{(()}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k}{return}\PYG{+w}{ }\PYG{n+nx}{news}\PYG{p}{.}\PYG{n+nx}{value}\PYG{p}{.}\PYG{n+nx}{filter}\PYG{p}{(}\PYG{n+nx}{item}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{matchesSearch}\PYG{+w}{ }\PYG{o}{=}
+\PYG{+w}{      }\PYG{n+nx}{item}\PYG{p}{.}\PYG{n+nx}{title}\PYG{p}{.}\PYG{n+nx}{toLowerCase}\PYG{p}{().}\PYG{n+nx}{includes}\PYG{p}{(}\PYG{n+nx}{search}\PYG{p}{.}\PYG{n+nx}{value}\PYG{p}{.}\PYG{n+nx}{toLowerCase}\PYG{p}{())}\PYG{+w}{ }\PYG{o}{||}
+\PYG{+w}{      }\PYG{n+nx}{item}\PYG{p}{.}\PYG{n+nx}{content}\PYG{p}{.}\PYG{n+nx}{toLowerCase}\PYG{p}{().}\PYG{n+nx}{includes}\PYG{p}{(}\PYG{n+nx}{search}\PYG{p}{.}\PYG{n+nx}{value}\PYG{p}{.}\PYG{n+nx}{toLowerCase}\PYG{p}{())}
+\PYG{+w}{    }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{matchesCategory}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{!}\PYG{n+nx}{categoryFilter}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{n+nx}{item}\PYG{p}{.}\PYG{n+nx}{category}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{n+nx}{categoryFilter}\PYG{p}{.}\PYG{n+nx}{value}
+\PYG{+w}{    }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{matchesDate}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{!}\PYG{n+nx}{dateFilter}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{n+nx}{item}\PYG{p}{.}\PYG{n+nx}{date}\PYG{+w}{ }\PYG{o}{===}\PYG{+w}{ }\PYG{n+nx}{dateFilter}\PYG{p}{.}\PYG{n+nx}{value}
+\PYG{+w}{    }\PYG{k}{return}\PYG{+w}{ }\PYG{n+nx}{matchesSearch}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n+nx}{matchesCategory}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n+nx}{matchesDate}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{})}
+\PYG{p}{\PYGZcb{})}
+\end{Verbatim}

@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{\PYGZlt{}!\PYGZhy{}\PYGZhy{} src/components/About.vue \PYGZhy{}\PYGZhy{}\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{v\PYGZhy{}if}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{firstName}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{n+nx}{lastName}\PYG{l+s}{\PYGZdq{}} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}alert alert\PYGZhy{}primary mt\PYGZhy{}4\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{h4} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}alert\PYGZhy{}heading mb\PYGZhy{}0\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+    Welcome\PYG{c+cp}{\PYGZob{}\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{firstName}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}, \PYGZsq{}}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n+nx}{firstName}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{+w}{ }\PYG{c+cp}{\PYGZcb{}\PYGZcb{}\PYGZob{}\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{lastName}\PYG{+w}{ }\PYG{o}{?}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n+nx}{lastName}\PYG{+w}{ }\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{+w}{ }\PYG{c+cp}{\PYGZcb{}\PYGZcb{}}!
+  \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{h4}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+...
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}mt\PYGZhy{}4\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{label} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}form\PYGZhy{}label\PYGZdq{}}\PYG{p}{\PYGZgt{}}Choose Your Theme\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{label}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}d\PYGZhy{}flex gap\PYGZhy{}3\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}form\PYGZhy{}check\PYGZhy{}input\PYGZdq{}} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}radio\PYGZdq{}} \PYG{n+na}{id}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}mountain\PYGZdq{}} \PYG{n+na}{value}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}mountain\PYGZdq{}} \PYG{n+na}{v\PYGZhy{}model}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{selectedImage}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+    ...
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}form\PYGZhy{}check\PYGZhy{}input\PYGZdq{}} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}radio\PYGZdq{}} \PYG{n+na}{id}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}ocean\PYGZdq{}} \PYG{n+na}{value}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}ocean\PYGZdq{}} \PYG{n+na}{v\PYGZhy{}model}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{selectedImage}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+\end{Verbatim}

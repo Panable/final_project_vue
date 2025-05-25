@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{/* src/style.css */}
+\PYG{p}{@}\PYG{k}{media}\PYG{+w}{ }\PYG{o}{(}\PYG{n+nt}{max\PYGZhy{}width}\PYG{o}{:}\PYG{+w}{ }\PYG{n+nt}{768px}\PYG{o}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{p}{.}\PYG{n+nc}{container}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{padding\PYGZhy{}left}\PYG{p}{:}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{k+kt}{rem}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{padding\PYGZhy{}right}\PYG{p}{:}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{k+kt}{rem}\PYG{p}{;}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{n+nt}{h1}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{font\PYGZhy{}size}\PYG{p}{:}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{k+kt}{rem}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{n+nt}{h2}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{font\PYGZhy{}size}\PYG{p}{:}\PYG{+w}{ }\PYG{l+m+mf}{1.75}\PYG{k+kt}{rem}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{n+nt}{h3}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{k}{font\PYGZhy{}size}\PYG{p}{:}\PYG{+w}{ }\PYG{l+m+mf}{1.5}\PYG{k+kt}{rem}\PYG{p}{;}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

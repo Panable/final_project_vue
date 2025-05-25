@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{paginatedNews}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{computed}\PYG{p}{(()}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{start}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{currentPage}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mf}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n+nx}{itemsPerPage}
+\PYG{+w}{  }\PYG{k}{return}\PYG{+w}{ }\PYG{n+nx}{filteredNews}\PYG{p}{.}\PYG{n+nx}{value}\PYG{p}{.}\PYG{n+nx}{slice}\PYG{p}{(}\PYG{n+nx}{start}\PYG{p}{,}\PYG{+w}{ }\PYG{n+nx}{start}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n+nx}{itemsPerPage}\PYG{p}{)}
+\PYG{p}{\PYGZcb{})}
+\end{Verbatim}

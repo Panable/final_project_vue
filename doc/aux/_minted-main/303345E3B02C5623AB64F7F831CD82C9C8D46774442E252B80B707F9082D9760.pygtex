@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{\PYGZlt{}!\PYGZhy{}\PYGZhy{} src/components/Login.vue (template excerpt) \PYGZhy{}\PYGZhy{}\PYGZgt{}}
+\PYG{p}{\PYGZlt{}}\PYG{n+nt}{form} \PYG{p}{@}\PYG{n+na}{submit}\PYG{p}{.}\PYG{n+na}{prevent}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{login}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}text\PYGZdq{}} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}form\PYGZhy{}control\PYGZdq{}} \PYG{n+na}{v\PYGZhy{}model}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{username}\PYG{l+s}{\PYGZdq{}} \PYG{n+na}{required}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{input} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}password\PYGZdq{}} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}form\PYGZhy{}control\PYGZdq{}} \PYG{n+na}{v\PYGZhy{}model}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{password}\PYG{l+s}{\PYGZdq{}} \PYG{n+na}{required}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{div} \PYG{n+na}{v\PYGZhy{}if}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{error}\PYG{l+s}{\PYGZdq{}} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}alert alert\PYGZhy{}danger\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+    \PYG{c+cp}{\PYGZob{}\PYGZob{}}\PYG{+w}{ }\PYG{n+nx}{error}\PYG{+w}{ }\PYG{c+cp}{\PYGZcb{}\PYGZcb{}}
+  \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{div}\PYG{p}{\PYGZgt{}}
+  \PYG{p}{\PYGZlt{}}\PYG{n+nt}{button} \PYG{n+na}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}submit\PYGZdq{}} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}btn btn\PYGZhy{}primary\PYGZdq{}} \PYG{p}{:}\PYG{n+na}{disabled}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{loading}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZgt{}}
+    \PYG{p}{\PYGZlt{}}\PYG{n+nt}{span} \PYG{n+na}{v\PYGZhy{}if}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{n+nx}{loading}\PYG{l+s}{\PYGZdq{}} \PYG{n+na}{class}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}spinner\PYGZhy{}border spinner\PYGZhy{}border\PYGZhy{}sm me\PYGZhy{}2\PYGZdq{}}\PYG{p}{\PYGZgt{}\PYGZlt{}/}\PYG{n+nt}{span}\PYG{p}{\PYGZgt{}}
+    Login
+  \PYG{p}{\PYGZlt{}/}\PYG{n+nt}{button}\PYG{p}{\PYGZgt{}}
+\PYG{p}{\PYGZlt{}/}\PYG{n+nt}{form}\PYG{p}{\PYGZgt{}}
+\end{Verbatim}

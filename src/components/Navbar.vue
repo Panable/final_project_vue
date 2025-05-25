@@ -16,8 +16,14 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/about">About</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/apply">Apply</router-link>
+          </li>
           <li class="nav-item" v-if="isLoggedIn">
             <router-link class="nav-link" to="/posts">Posts</router-link>
+          </li>
+          <li class="nav-item" v-if="isLoggedIn">
+            <router-link class="nav-link" to="/kanban">Kanban</router-link>
           </li>
         </ul>
         <ul class="navbar-nav">

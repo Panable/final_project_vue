@@ -1,0 +1,2166 @@
+===== ./vite.config.js =====
+import { fileURLToPath, URL } from "node:url";
+
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueDevTools from "vite-plugin-vue-devtools";
+
+// https://vite.dev/config/
+export default defineConfig(({ mode }) => {
+  return {
+    base: mode === "production" ? "/cos30043/s103866373/project" : "/",
+    plugins: [vue(), vueDevTools()],
+    resolve: {
+      alias: {
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
+    },
+  };
+});
+
+
+
+===== ./package.json =====
+{
+  "name": "techvision",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.2",
+    "bootstrap-icons": "^1.11.3",
+    "vite-plugin-vue-devtools": "^7.7.6",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5",
+    "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.5.0",
+    "vite": "^5.0.0"
+  }
+}
+
+
+===== ./index.html =====
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+
+
+===== ./src/router/index.js =====
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../components/Home.vue'
+import Login from '../components/Login.vue'
+import Register from '../components/Register.vue'
+import News from '../components/News.vue'
+import Posts from '../components/Posts.vue'
+import About from '../components/About.vue'
+import Kanban from '../components/Kanban.vue'
+import { getUrl } from '../utils/url'
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.PROD ? '/cos30043/s103866373/project' : ''),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: News
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
+    },
+    {
+      path: '/posts',
+      name: 'posts',
+      component: Posts,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/kanban',
+      name: 'kanban',
+      component: Kanban,
+      meta: { requiresAuth: true }
+    }
+  ]
+})
+
+// Navigation guard for protected routes
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requiresAuth) {
+    try {
+      const response = await fetch(`${getUrl('api.php')}?action=current_user`)
+      const data = await response.json()
+      if (data.user) {
+        next()
+      } else {
+        next('/login')
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error)
+      next('/login')
+    }
+  } else {
+    next()
+  }
+})
+
+export default router
+
+
+===== ./src/main.js =====
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+
+// Import Bootstrap CSS and JS
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
+// Import Bootstrap Icons
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
+// Import custom styles
+import './style.css'
+
+const app = createApp(App)
+
+app.use(router)
+app.mount('#app')
+
+
+===== ./src/style.css =====
+:root {
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --success-color: #198754;
+  --info-color: #0dcaf0;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+  color: var(--dark-color);
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #0a58ca;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Cards */
+.card {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Form Elements */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--dark-color);
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Utilities */
+.text-primary { color: var(--primary-color) !important; }
+.text-secondary { color: var(--secondary-color) !important; }
+.text-success { color: var(--success-color) !important; }
+.text-info { color: var(--info-color) !important; }
+.text-warning { color: var(--warning-color) !important; }
+.text-danger { color: var(--danger-color) !important; }
+.text-light { color: var(--light-color) !important; }
+.text-dark { color: var(--dark-color) !important; }
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.5rem; }
+}
+
+
+===== ./src/utils/url.js =====
+/**
+ * Utility function to get the correct base path for URLs based on environment
+ * @param {string} path - The path to append to the base URL
+ * @returns {string} The complete URL with the correct base path
+ */
+export function getUrl(path) {
+  const basePath = import.meta.env.PROD ? '/cos30043/s103866373/project' : '';
+  // Remove leading slash if path already has one
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${basePath}/${cleanPath}`;
+} 
+
+===== ./src/components/About.vue =====
+<template>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- Name Input Section -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-body p-4">
+            <h3 class="card-title mb-4">Welcome to TechVision</h3>
+            
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="firstName" 
+                    v-model="firstName"
+                    placeholder="First Name"
+                  >
+                  <label for="firstName">First Name</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="lastName" 
+                    v-model="lastName"
+                    placeholder="Last Name"
+                  >
+                  <label for="lastName">Last Name</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Welcome Message -->
+            <div v-if="firstName || lastName" class="alert alert-primary mt-4 animate__animated animate__fadeIn">
+              <h4 class="alert-heading mb-0">
+                Welcome{{ firstName ? ', ' + firstName : '' }}{{ lastName ? ' ' + lastName : '' }}!
+              </h4>
+            </div>
+
+            <!-- Theme Selection -->
+            <div class="mt-4">
+              <label class="form-label">Choose Your Theme</label>
+              <div class="d-flex gap-3">
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    id="mountain" 
+                    value="mountain" 
+                    v-model="selectedImage"
+                  >
+                  <label class="form-check-label" for="mountain">
+                    <i class="bi bi-mountain"></i> Mountain
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    id="ocean" 
+                    value="ocean" 
+                    v-model="selectedImage"
+                  >
+                  <label class="form-check-label" for="ocean">
+                    <i class="bi bi-water"></i> Ocean
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Selected Image Display -->
+            <div v-if="selectedImage" class="position-relative rounded-3 overflow-hidden mt-4">
+              <img 
+                :src="imageSrc" 
+                :alt="selectedImage" 
+                class="img-fluid shadow-sm"
+              >
+              <div class="position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-75 text-white p-4">
+                <h4 class="mb-1">{{ selectedImage === 'mountain' ? 'Mountain View' : 'Ocean View' }}</h4>
+                <p class="mb-0">{{ selectedImage === 'mountain' ? 'Explore the heights of technology' : 'Dive into the depths of innovation' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="bg-light rounded-3 p-4">
+          <h2 class="display-4 mb-4">About TechVision</h2>
+          <p class="lead mb-4">
+            TechVision is your premier destination for staying informed about the latest technological advancements, 
+            industry trends, and digital innovations. Our platform brings together tech enthusiasts, professionals, 
+            and curious minds in a vibrant community focused on the future of technology.
+          </p>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm hover-shadow">
+                <div class="card-body text-center p-4">
+                  <i class="bi bi-lightning-charge display-4 text-primary"></i>
+                  <h4 class="mt-3">Fast Updates</h4>
+                  <p class="mb-0">Real-time news and updates from the tech world</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm hover-shadow">
+                <div class="card-body text-center p-4">
+                  <i class="bi bi-people display-4 text-primary"></i>
+                  <h4 class="mt-3">Community</h4>
+                  <p class="mb-0">Join discussions with tech enthusiasts worldwide</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm hover-shadow">
+                <div class="card-body text-center p-4">
+                  <i class="bi bi-graph-up display-4 text-primary"></i>
+                  <h4 class="mt-3">Insights</h4>
+                  <p class="mb-0">Expert analysis and market trends</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue'
+
+const firstName = ref('')
+const lastName = ref('')
+const selectedImage = ref('')
+
+const imageSrc = computed(() => {
+  return selectedImage.value === 'mountain'
+    ? 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b'
+    : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e'
+})
+</script>
+
+<style scoped>
+.hover-shadow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+</style>
+
+
+===== ./src/components/Navbar.vue =====
+<template>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <router-link class="navbar-brand" to="/">My App</router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/">Home</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/news">News</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/about">About</router-link>
+          </li>
+          <li class="nav-item" v-if="isLoggedIn">
+            <router-link class="nav-link" to="/posts">Posts</router-link>
+          </li>
+          <li class="nav-item" v-if="isLoggedIn">
+            <router-link class="nav-link" to="/kanban">Kanban</router-link>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <template v-if="isLoggedIn">
+            <li class="nav-item">
+              <span class="nav-link">
+                {{ username }}
+                <span v-if="isAdmin" class="badge bg-primary ms-1">Admin</span>
+              </span>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-link nav-link" @click="logout">Logout</button>
+            </li>
+          </template>
+          <template v-else>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/login">Login</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/register">Register</router-link>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</template>
+
+<script setup>
+import { ref, onMounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { getUrl } from '../utils/url'
+
+const router = useRouter()
+const route = useRoute()
+const isLoggedIn = ref(false)
+const username = ref('')
+const isAdmin = ref(false)
+
+const checkAuthStatus = async () => {
+  try {
+    const response = await fetch(`${getUrl('api.php')}?action=current_user`, {
+      credentials: 'include'
+    })
+    const data = await response.json()
+    isLoggedIn.value = !!data.user
+    username.value = data.user?.username || ''
+    isAdmin.value = data.user?.role === 'admin'
+  } catch (error) {
+    console.error('Auth check failed:', error)
+    isLoggedIn.value = false
+    username.value = ''
+    isAdmin.value = false
+  }
+}
+
+// Check auth status on mount and route changes
+onMounted(checkAuthStatus)
+watch(() => route.path, checkAuthStatus)
+
+const logout = async () => {
+  try {
+    const response = await fetch(getUrl('api.php'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ action: 'logout' })
+    })
+    const data = await response.json()
+    if (data.success) {
+      isLoggedIn.value = false
+      username.value = ''
+      isAdmin.value = false
+      router.push('/login')
+    }
+  } catch (error) {
+    console.error('Logout error:', error)
+  }
+}
+</script> 
+
+===== ./src/components/Home.vue =====
+<template>
+  <div class="container py-5">
+    <!-- Hero Section -->
+    <div class="bg-light rounded-3 p-5 mb-5 text-center">
+      <h1 class="display-4 fw-bold mb-4">Welcome to TechVision</h1>
+      <p class="lead mb-4">Your gateway to the latest in technology and innovation</p>
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn btn-primary btn-lg">Get Started</button>
+        <button class="btn btn-outline-primary btn-lg">Learn More</button>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm hover-shadow">
+          <div class="card-body text-center p-4">
+            <i class="bi bi-laptop display-4 mb-3 text-primary"></i>
+            <h3>Latest Tech</h3>
+            <p>Stay updated with the newest technological advancements and innovations.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm hover-shadow">
+          <div class="card-body text-center p-4">
+            <i class="bi bi-people display-4 mb-3 text-primary"></i>
+            <h3>Community</h3>
+            <p>Join our growing community of tech enthusiasts and professionals.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm hover-shadow">
+          <div class="card-body text-center p-4">
+            <i class="bi bi-graph-up display-4 mb-3 text-primary"></i>
+            <h3>Insights</h3>
+            <p>Get valuable insights and analysis on emerging tech trends.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Gallery -->
+    <div class="row g-4 mt-5">
+      <div class="col-md-6">
+        <div class="position-relative overflow-hidden rounded-3 shadow-sm">
+          <img 
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475"
+            alt="Modern Technology" 
+            class="img-fluid"
+          >
+          <div class="position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-75 text-white p-4 translate-y-100 transition-transform">
+            <h4>Innovation</h4>
+            <p class="mb-0">Discover the future of technology</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="position-relative overflow-hidden rounded-3 shadow-sm">
+          <img 
+            src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"
+            alt="Digital World" 
+            class="img-fluid"
+          >
+          <div class="position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-75 text-white p-4 translate-y-100 transition-transform">
+            <h4>Digital World</h4>
+            <p class="mb-0">Explore the digital landscape</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+// Static homepage component
+</script>
+
+<style scoped>
+.hover-shadow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.transition-transform {
+  transition: transform 0.3s ease;
+}
+
+.position-relative:hover .translate-y-100 {
+  transform: translateY(0);
+}
+</style>
+
+
+===== ./src/components/News.vue =====
+<template>
+  <div class="container py-5">
+    <!-- Search Section -->
+    <div class="bg-light rounded-3 p-4 mb-4 shadow-sm">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input 
+              type="text" 
+              class="form-control" 
+              v-model="search" 
+              placeholder="Search news..."
+            >
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" v-model="categoryFilter">
+            <option value="">All Categories</option>
+            <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <input 
+            type="date" 
+            class="form-control" 
+            v-model="dateFilter"
+          >
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-outline-secondary w-100" @click="clearFilters">
+            Clear Filters
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- News Grid -->
+    <div class="row g-4">
+      <div v-if="filteredNews.length === 0" class="col-12">
+        <div class="text-center py-5 bg-light rounded-3">
+          <i class="bi bi-newspaper display-1 text-muted"></i>
+          <h3 class="mt-3">No news found</h3>
+          <p class="text-muted">Try adjusting your search criteria</p>
+        </div>
+      </div>
+      <div v-else class="col-md-6 col-lg-4" v-for="item in paginatedNews" :key="item.id">
+        <div class="card h-100 shadow-sm hover-shadow">
+          <div class="position-relative">
+            <img :src="item.image" :alt="item.title" class="card-img-top" style="height: 200px; object-fit: cover;">
+            <span class="position-absolute top-0 end-0 m-3 bg-dark bg-opacity-75 text-white px-3 py-1 rounded-pill small">
+              {{ item.category }}
+            </span>
+          </div>
+          <div class="card-body">
+            <div class="text-muted mb-2">
+              <i class="bi bi-calendar3"></i> {{ formatDate(item.date) }}
+            </div>
+            <h3 class="card-title h5 mb-3">{{ item.title }}</h3>
+            <p class="card-text text-muted">{{ item.content }}</p>
+            <button class="btn btn-link p-0">Read more <i class="bi bi-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-4">
+      <Pagination 
+        :total="filteredNews.length" 
+        :page-size="itemsPerPage" 
+        @page-changed="changePage"
+      />
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import Pagination from './Pagination.vue'
+import { getUrl } from '../utils/url'
+
+const news = ref([])
+const search = ref('')
+const categoryFilter = ref('')
+const dateFilter = ref('')
+const currentPage = ref(1)
+const itemsPerPage = 6
+
+onMounted(async () => {
+  const response = await fetch(getUrl('news.json'))
+  const data = await response.json()
+  news.value = data.news
+})
+
+const categories = computed(() => {
+  const uniqueCategories = new Set(news.value.map(item => item.category))
+  return Array.from(uniqueCategories)
+})
+
+const filteredNews = computed(() => {
+  return news.value.filter(item => {
+    const matchesSearch = 
+      item.title.toLowerCase().includes(search.value.toLowerCase()) ||
+      item.content.toLowerCase().includes(search.value.toLowerCase())
+    
+    const matchesCategory = !categoryFilter.value || item.category === categoryFilter.value
+    
+    const matchesDate = !dateFilter.value || item.date === dateFilter.value
+    
+    return matchesSearch && matchesCategory && matchesDate
+  })
+})
+
+const paginatedNews = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  return filteredNews.value.slice(start, start + itemsPerPage)
+})
+
+const changePage = (page) => {
+  currentPage.value = page
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const clearFilters = () => {
+  search.value = ''
+  categoryFilter.value = ''
+  dateFilter.value = ''
+  currentPage.value = 1
+}
+
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' }
+  return new Date(dateString).toLocaleDateString(undefined, options)
+}
+</script>
+
+<style scoped>
+.hover-shadow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+</style>
+
+
+===== ./src/components/Posts.vue =====
+<template>
+  <div class="container py-5">
+    <!-- Admin Controls -->
+    <div v-if="isAdmin" class="mb-4">
+      <button class="btn btn-primary" @click="showCreateModal = true">
+        <i class="bi bi-plus-lg"></i> New Post
+      </button>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="row g-4">
+      <div v-if="posts.length === 0" class="col-12">
+        <div class="text-center py-5 bg-light rounded-3">
+          <i class="bi bi-newspaper display-1 text-muted"></i>
+          <h3 class="mt-3">No posts yet</h3>
+          <p class="text-muted" v-if="isAdmin">Create your first post!</p>
+        </div>
+      </div>
+      <div v-else class="col-md-6 col-lg-4" v-for="post in paginatedPosts" :key="post.id">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <h3 class="card-title h5 mb-0">{{ post.title }}</h3>
+              <div v-if="isAdmin" class="d-flex">
+                <button class="btn btn-sm btn-outline-primary me-2" @click="editPost(post)">Edit</button>
+                <button class="btn btn-sm btn-outline-danger" @click="deletePost(post.id)">Delete</button>
+              </div>
+            </div>
+            <p class="card-text">{{ post.content }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <button 
+                class="btn btn-link p-0" 
+                @click="toggleLike(post)"
+                :class="{ 'text-danger': post.user_liked }"
+              >
+                <i class="bi" :class="post.user_liked ? 'bi-heart-fill' : 'bi-heart'"></i>
+                {{ post.like_count }} likes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-4">
+      <Pagination 
+        :total="posts.length" 
+        :page-size="itemsPerPage" 
+        @page-changed="changePage"
+      />
+    </div>
+
+    <!-- Create/Edit Modal -->
+    <div class="modal fade" id="postModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ editingPost ? 'Edit Post' : 'New Post' }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="savePost">
+              <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-control" v-model="postForm.title" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Content</label>
+                <textarea class="form-control" v-model="postForm.content" rows="4" required></textarea>
+              </div>
+              <div class="text-end">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted, watch } from 'vue'
+import Pagination from './Pagination.vue'
+import { getUrl } from '../utils/url'
+import { Modal, Dropdown } from 'bootstrap'
+
+const API_URL = getUrl('api.php')
+const posts = ref([])
+const currentPage = ref(1)
+const itemsPerPage = 6
+const isAdmin = ref(false)
+const showCreateModal = ref(false)
+const editingPost = ref(null)
+const postForm = ref({ title: '', content: '' })
+let postModal = null
+
+onMounted(async () => {
+  // Initialize Bootstrap modal
+  const modalElement = document.getElementById('postModal')
+  if (modalElement) {
+    postModal = new Modal(modalElement)
+  }
+  
+  // Check if user is admin
+  const response = await fetch(`${API_URL}?action=current_user`, {
+    credentials: 'include'
+  })
+  const data = await response.json()
+  isAdmin.value = data.user?.role === 'admin'
+  
+  // Load posts
+  loadPosts()
+})
+
+const loadPosts = async () => {
+  try {
+    const response = await fetch(`${API_URL}?action=posts`, {
+      credentials: 'include'
+    })
+    const data = await response.json()
+    if (data.success) {
+      posts.value = data.posts
+    }
+  } catch (error) {
+    console.error('Error loading posts:', error)
+  }
+}
+
+const paginatedPosts = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  return posts.value.slice(start, start + itemsPerPage)
+})
+
+const changePage = (page) => {
+  currentPage.value = page
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const toggleLike = async (post) => {
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        action: 'toggle_like',
+        post_id: post.id
+      })
+    })
+    const data = await response.json()
+    if (data.success) {
+      // Update the post's like status and count
+      post.user_liked = data.action === 'liked'
+      post.like_count += data.action === 'liked' ? 1 : -1
+    }
+  } catch (error) {
+    console.error('Error toggling like:', error)
+  }
+}
+
+const editPost = (post) => {
+  editingPost.value = post
+  postForm.value = { ...post }
+  postModal.show()
+}
+
+const deletePost = async (id) => {
+  if (!confirm('Are you sure you want to delete this post?')) return
+  
+  try {
+    const response = await fetch(API_URL, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        action: 'delete_post',
+        id
+      })
+    })
+    const data = await response.json()
+    if (data.success) {
+      posts.value = posts.value.filter(p => p.id !== id)
+    }
+  } catch (error) {
+    console.error('Error deleting post:', error)
+  }
+}
+
+const savePost = async () => {
+  try {
+    const method = editingPost.value ? 'PUT' : 'POST'
+    const action = editingPost.value ? 'update_post' : 'create_post'
+    const body = {
+      action,
+      ...postForm.value
+    }
+    
+    if (editingPost.value) {
+      body.id = editingPost.value.id
+    }
+    
+    const response = await fetch(API_URL, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(body)
+    })
+    
+    const data = await response.json()
+    if (data.success) {
+      if (postModal) {
+        postModal.hide()
+      }
+      await loadPosts() // Reload posts to get fresh data
+      postForm.value = { title: '', content: '' }
+      editingPost.value = null
+      showCreateModal.value = false
+    }
+  } catch (error) {
+    console.error('Error saving post:', error)
+  }
+}
+
+// Watch for modal show/hide
+watch(showCreateModal, (show) => {
+  if (show && postModal) {
+    editingPost.value = null
+    postForm.value = { title: '', content: '' }
+    postModal.show()
+  }
+})
+</script> 
+
+
+===== ./src/components/Apply.vue =====
+<template>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <h2 class="display-4 mb-4">Application Form</h2>
+            <form 
+              class="needs-validation" 
+              novalidate
+              method="post" 
+              action="http://mercury.swin.edu.au/it000000/formtest.php"
+              @submit.prevent="submitForm"
+            >
+              <fieldset class="mb-4">
+                <legend class="h5 mb-3">Personal Information</legend>
+
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.firstName" type="text" class="form-control" id="firstName" name="firstName" required />
+                      <label for="firstName">First Name</label>
+                      <div v-if="errors.firstName" class="invalid-feedback d-block">{{ errors.firstName }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.lastName" type="text" class="form-control" id="lastName" name="lastName" required />
+                      <label for="lastName">Last Name</label>
+                      <div v-if="errors.lastName" class="invalid-feedback d-block">{{ errors.lastName }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.username" type="text" class="form-control" id="username" name="username" required />
+                      <label for="username">Username</label>
+                      <div v-if="errors.username" class="invalid-feedback d-block">{{ errors.username }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.email" type="email" class="form-control" id="email" name="email" required />
+                      <label for="email">Email</label>
+                      <div v-if="errors.email" class="invalid-feedback d-block">{{ errors.email }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.password" type="password" class="form-control" id="password" name="password" required />
+                      <label for="password">Password</label>
+                      <div v-if="errors.password" class="invalid-feedback d-block">{{ errors.password }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.confirmPassword" type="password" class="form-control" id="confirmPassword" name="confirmPassword" required />
+                      <label for="confirmPassword">Confirm Password</label>
+                      <div v-if="errors.confirmPassword" class="invalid-feedback d-block">{{ errors.confirmPassword }}</div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="mb-4">
+                <legend class="h5 mb-3">Address Information</legend>
+
+                <div class="row g-3">
+                  <div class="col-12">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.streetAddress" type="text" class="form-control" id="streetAddress" name="streetAddress" maxlength="40" />
+                      <label for="streetAddress">Street Address</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.suburb" type="text" class="form-control" id="suburb" name="suburb" maxlength="20" />
+                      <label for="suburb">Suburb</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.postcode" type="text" class="form-control" id="postcode" name="postcode" required />
+                      <label for="postcode">Postcode</label>
+                      <div v-if="errors.postcode" class="invalid-feedback d-block">{{ errors.postcode }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.mobile" type="text" class="form-control" id="mobile" name="mobile" required />
+                      <label for="mobile">Mobile Number</label>
+                      <div v-if="errors.mobile" class="invalid-feedback d-block">{{ errors.mobile }}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input v-model="form.dob" type="date" class="form-control" id="dob" name="dob" required />
+                      <label for="dob">Date of Birth</label>
+                      <div v-if="errors.dob" class="invalid-feedback d-block">{{ errors.dob }}</div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="mb-4">
+                <legend class="h5 mb-3">Job Preferences</legend>
+
+                <div class="form-floating mb-3">
+                  <select v-model="form.category" class="form-select" id="category" name="category" required>
+                    <option disabled value="">Select a category</option>
+                    <option>AI</option>
+                    <option>Data Science</option>
+                    <option>Software Development</option>
+                    <option>Cybersecurity</option>
+                    <option>DevOps</option>
+                  </select>
+                  <label for="category">Preferred Job Category</label>
+                  <div v-if="errors.category" class="invalid-feedback d-block">{{ errors.category }}</div>
+                </div>
+              </fieldset>
+
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-send me-2"></i>Submit
+                </button>
+                <button type="button" @click="showTerms = !showTerms" class="btn btn-outline-secondary">
+                  <i class="bi bi-file-text me-2"></i>{{ showTerms ? 'Hide Terms' : 'Show Terms' }}
+                </button>
+              </div>
+
+              <div v-if="showTerms" class="mt-4 p-3 bg-light rounded">
+                <h6 class="mb-2">Terms and Conditions:</h6>
+                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { reactive, ref } from 'vue'
+
+const form = reactive({
+  firstName: '',
+  lastName: '',
+  username: '',
+  password: '',
+  confirmPassword: '',
+  email: '',
+  streetAddress: '',
+  suburb: '',
+  postcode: '',
+  mobile: '',
+  dob: '',
+  category: ''
+})
+
+const errors = reactive({})
+const showTerms = ref(false)
+
+function validateForm() {
+  errors.firstName = /^[A-Za-z]+$/.test(form.firstName) ? '' : 'First Name must contain only letters'
+  errors.lastName = /^[A-Za-z]+$/.test(form.lastName) ? '' : 'Last Name must contain only letters'
+  errors.username = form.username.length >= 3 ? '' : 'Username must be at least 3 characters'
+  errors.password = /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/.test(form.password) ? '' : 'Password must be at least 8 characters and contain a special character'
+  errors.confirmPassword = form.confirmPassword === form.password ? '' : 'Passwords do not match'
+  errors.email = /^\S+@\S+\.\S+$/.test(form.email) ? '' : 'Invalid email format'
+  errors.postcode = /^\d{4}$/.test(form.postcode) ? '' : 'Postcode must be exactly 4 digits'
+  errors.mobile = /^04\d{8}$/.test(form.mobile) ? '' : 'Mobile must start with 04 and have 10 digits'
+  errors.dob = form.dob && (new Date().getFullYear() - new Date(form.dob).getFullYear()) >= 16 ? '' : 'You must be at least 16 years old'
+  errors.category = form.category ? '' : 'Please select a category'
+
+  return Object.values(errors).every(e => !e)
+}
+
+function submitForm() {
+  if (validateForm()) {
+    document.querySelector('form').submit()
+  }
+}
+</script>
+
+<style scoped>
+.form-control:focus,
+.form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+</style> 
+
+===== ./src/components/Kanban.vue =====
+<template>
+  <div class="container mt-4">
+    <h2 class="mb-4">Kanban Board</h2>
+    
+    <!-- Add New Card Form -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Add New Card</h5>
+        <form @submit.prevent="createCard">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" v-model="newCard.title" required>
+          </div>
+          <div class="mb-3">
+            <label for="tag" class="form-label">Tag</label>
+            <select class="form-select" id="tag" v-model="newCard.tag">
+              <option value="">None</option>
+              <option value="bug">Bug</option>
+              <option value="feature">Feature</option>
+              <option value="enhancement">Enhancement</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Card</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-secondary text-white">
+            To Do
+          </div>
+          <div class="card-body">
+            <draggable 
+              v-model="todoCards" 
+              group="cards"
+              @change="onChange"
+              item-key="id"
+              class="min-height"
+            >
+              <template #item="{ element }">
+                <div class="card mb-2">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ element.title }}</h5>
+                    <span v-if="element.tag" :class="getTagClass(element.tag)" class="badge mb-2">
+                      {{ element.tag }}
+                    </span>
+                    <div class="d-flex justify-content-end">
+                      <button @click="editCard(element)" class="btn btn-sm btn-outline-primary me-2">
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button @click="deleteCard(element.id)" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </draggable>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            In Progress
+          </div>
+          <div class="card-body">
+            <draggable 
+              v-model="inProgressCards" 
+              group="cards"
+              @change="onChange"
+              item-key="id"
+              class="min-height"
+            >
+              <template #item="{ element }">
+                <div class="card mb-2">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ element.title }}</h5>
+                    <span v-if="element.tag" :class="getTagClass(element.tag)" class="badge mb-2">
+                      {{ element.tag }}
+                    </span>
+                    <div class="d-flex justify-content-end">
+                      <button @click="editCard(element)" class="btn btn-sm btn-outline-primary me-2">
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button @click="deleteCard(element.id)" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </draggable>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-success text-white">
+            Done
+          </div>
+          <div class="card-body">
+            <draggable 
+              v-model="doneCards" 
+              group="cards"
+              @change="onChange"
+              item-key="id"
+              class="min-height"
+            >
+              <template #item="{ element }">
+                <div class="card mb-2">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ element.title }}</h5>
+                    <span v-if="element.tag" :class="getTagClass(element.tag)" class="badge mb-2">
+                      {{ element.tag }}
+                    </span>
+                    <div class="d-flex justify-content-end">
+                      <button @click="editCard(element)" class="btn btn-sm btn-outline-primary me-2">
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button @click="deleteCard(element.id)" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </draggable>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Card Modal -->
+    <div class="modal fade" id="editCardModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Card</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="updateCard">
+              <div class="mb-3">
+                <label for="editTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="editTitle" v-model="editingCard.title" required>
+              </div>
+              <div class="mb-3">
+                <label for="editTag" class="form-label">Tag</label>
+                <select class="form-select" id="editTag" v-model="editingCard.tag">
+                  <option value="">None</option>
+                  <option value="bug">Bug</option>
+                  <option value="feature">Feature</option>
+                  <option value="enhancement">Enhancement</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref, onMounted } from 'vue'
+import draggable from 'vuedraggable'
+import { Modal } from 'bootstrap'
+import { getUrl } from '../utils/url'
+
+export default {
+  name: 'Kanban',
+  components: {
+    draggable
+  },
+  setup() {
+    const todoCards = ref([])
+    const inProgressCards = ref([])
+    const doneCards = ref([])
+    const newCard = ref({
+      title: '',
+      tag: '',
+      column: 'todo'
+    })
+    const editingCard = ref({
+      id: null,
+      title: '',
+      tag: '',
+      column: ''
+    })
+    let editModal = null
+
+    const fetchCards = async () => {
+      try {
+        const response = await fetch(`${getUrl('api.php')}?action=cards`, {
+          credentials: 'include'
+        })
+        const data = await response.json()
+        if (data.success) {
+          // Sort cards into their respective columns
+          todoCards.value = data.cards.filter(card => card.column === 'todo')
+          inProgressCards.value = data.cards.filter(card => card.column === 'in_progress')
+          doneCards.value = data.cards.filter(card => card.column === 'done')
+        }
+      } catch (error) {
+        console.error('Error fetching cards:', error)
+      }
+    }
+
+    const createCard = async () => {
+      try {
+        const response = await fetch(getUrl('api.php'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            action: 'create_card',
+            ...newCard.value
+          })
+        })
+        const data = await response.json()
+        if (data.success) {
+          todoCards.value.unshift(data.card)
+          newCard.value = {
+            title: '',
+            tag: '',
+            column: 'todo'
+          }
+        }
+      } catch (error) {
+        console.error('Error creating card:', error)
+      }
+    }
+
+    const updateCard = async () => {
+      try {
+        const response = await fetch(getUrl('api.php'), {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            action: 'update_card',
+            ...editingCard.value
+          })
+        })
+        const data = await response.json()
+        if (data.success) {
+          await fetchCards() // Refresh all cards to ensure correct state
+          editModal.hide()
+        }
+      } catch (error) {
+        console.error('Error updating card:', error)
+      }
+    }
+
+    const deleteCard = async (id) => {
+      if (!confirm('Are you sure you want to delete this card?')) return
+
+      try {
+        const response = await fetch(`${getUrl('api.php')}?action=delete_card&id=${id}`, {
+          method: 'DELETE',
+          credentials: 'include'
+        })
+        const data = await response.json()
+        if (data.success) {
+          await fetchCards() // Refresh all cards to ensure correct state
+        }
+      } catch (error) {
+        console.error('Error deleting card:', error)
+      }
+    }
+
+    const onChange = async (event) => {
+      if (!event.added && !event.moved) return
+
+      const card = event.added ? event.added.element : event.moved.element
+      const newColumn = event.added ? event.added.to.id : event.moved.to.id
+
+      try {
+        const response = await fetch(getUrl('api.php'), {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            action: 'update_card',
+            id: card.id,
+            title: card.title,
+            tag: card.tag,
+            column: newColumn
+          })
+        })
+        const data = await response.json()
+        if (!data.success) {
+          await fetchCards() // Refresh all cards if update failed
+        }
+      } catch (error) {
+        console.error('Error updating card column:', error)
+        await fetchCards() // Refresh all cards if there was an error
+      }
+    }
+
+    const editCard = (card) => {
+      editingCard.value = { ...card }
+      editModal.show()
+    }
+
+    const getTagClass = (tag) => {
+      const classes = {
+        bug: 'bg-danger',
+        feature: 'bg-primary',
+        enhancement: 'bg-success'
+      }
+      return classes[tag] || 'bg-secondary'
+    }
+
+    onMounted(() => {
+      fetchCards()
+      editModal = new Modal(document.getElementById('editCardModal'))
+    })
+
+    return {
+      todoCards,
+      inProgressCards,
+      doneCards,
+      newCard,
+      editingCard,
+      createCard,
+      updateCard,
+      deleteCard,
+      onChange,
+      editCard,
+      getTagClass
+    }
+  }
+}
+</script>
+
+<style scoped>
+.min-height {
+  min-height: 200px;
+}
+</style> 
+
+===== ./src/components/Login.vue =====
+<template>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="text-center mb-4">Login</h2>
+            <form @submit.prevent="login">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="username" 
+                  v-model="form.username" 
+                  required
+                >
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  id="password" 
+                  v-model="form.password" 
+                  required
+                >
+              </div>
+              <div v-if="error" class="alert alert-danger">
+                {{ error }}
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary" :disabled="loading">
+                  <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  Login
+                </button>
+              </div>
+            </form>
+            <div class="text-center mt-3">
+              <p class="mb-0">Don't have an account? <router-link to="/register">Register</router-link></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { getUrl } from '../utils/url'
+
+const router = useRouter()
+const form = ref({
+  username: '',
+  password: ''
+})
+const error = ref('')
+const loading = ref(false)
+
+const login = async () => {
+  error.value = ''
+  loading.value = true
+  
+  try {
+    const response = await fetch(getUrl('api.php'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        action: 'login',
+        ...form.value
+      })
+    })
+
+    const data = await response.json()
+    
+    if (data.success) {
+      router.push('/')
+    } else {
+      error.value = data.error || 'Login failed'
+    }
+  } catch (err) {
+    error.value = 'An error occurred. Please try again.'
+    console.error('Login error:', err)
+  } finally {
+    loading.value = false
+  }
+}
+</script> 
+
+===== ./src/components/Pagination.vue =====
+<template>
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <!-- Previous Button -->
+      <li class="page-item" :class="{ disabled: currentPage === 1 }">
+        <button 
+          class="page-link" 
+          @click="changePage(currentPage - 1)"
+          :disabled="currentPage === 1"
+          aria-label="Previous page"
+        >
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </li>
+
+      <!-- First Page -->
+      <li v-if="showFirstPage" class="page-item">
+        <button class="page-link" @click="changePage(1)">1</button>
+      </li>
+
+      <!-- Left Ellipsis -->
+      <li v-if="showLeftEllipsis" class="page-item disabled">
+        <span class="page-link">...</span>
+      </li>
+
+      <!-- Page Numbers -->
+      <li 
+        v-for="page in displayedPages" 
+        :key="page" 
+        class="page-item"
+        :class="{ active: currentPage === page }"
+      >
+        <button 
+          class="page-link" 
+          @click="changePage(page)"
+          :aria-current="currentPage === page ? 'page' : undefined"
+        >
+          {{ page }}
+        </button>
+      </li>
+
+      <!-- Right Ellipsis -->
+      <li v-if="showRightEllipsis" class="page-item disabled">
+        <span class="page-link">...</span>
+      </li>
+
+      <!-- Last Page -->
+      <li v-if="showLastPage" class="page-item">
+        <button class="page-link" @click="changePage(totalPages)">{{ totalPages }}</button>
+      </li>
+
+      <!-- Next Button -->
+      <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+        <button 
+          class="page-link" 
+          @click="changePage(currentPage + 1)"
+          :disabled="currentPage === totalPages"
+          aria-label="Next page"
+        >
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</template>
+
+<script setup>
+import { computed, ref, watch } from 'vue'
+
+const props = defineProps({
+  total: {
+    type: Number,
+    required: true
+  },
+  pageSize: {
+    type: Number,
+    required: true
+  }
+})
+
+const emit = defineEmits(['page-changed'])
+const currentPage = ref(1)
+
+const totalPages = computed(() => Math.ceil(props.total / props.pageSize))
+
+// Calculate which pages to show
+const displayedPages = computed(() => {
+  const pages = []
+  const maxVisiblePages = 5
+  let start = Math.max(1, currentPage.value - Math.floor(maxVisiblePages / 2))
+  let end = Math.min(totalPages.value, start + maxVisiblePages - 1)
+
+  if (end - start + 1 < maxVisiblePages) {
+    start = Math.max(1, end - maxVisiblePages + 1)
+  }
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i)
+  }
+
+  return pages
+})
+
+// Show/hide first page
+const showFirstPage = computed(() => {
+  return displayedPages.value[0] > 1
+})
+
+// Show/hide last page
+const showLastPage = computed(() => {
+  return displayedPages.value[displayedPages.value.length - 1] < totalPages.value
+})
+
+// Show/hide ellipsis
+const showLeftEllipsis = computed(() => {
+  return displayedPages.value[0] > 2
+})
+
+const showRightEllipsis = computed(() => {
+  return displayedPages.value[displayedPages.value.length - 1] < totalPages.value - 1
+})
+
+const changePage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page
+    emit('page-changed', page)
+  }
+}
+
+watch(currentPage, (newPage) => {
+  emit('page-changed', newPage)
+})
+</script>
+
+<style scoped>
+.pagination {
+  margin: 0;
+}
+
+.page-link {
+  color: #2c3e50;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0 0.2rem;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.page-link:hover {
+  background-color: #e9ecef;
+  color: #2c3e50;
+}
+
+.page-item.active .page-link {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #f8f9fa;
+}
+
+@media (max-width: 576px) {
+  .page-link {
+    padding: 0.4rem 0.8rem;
+    margin: 0 0.1rem;
+  }
+}
+</style>
+
+
+===== ./src/components/NewsItem.vue =====
+<template>
+  <div class="col-md-4 mb-3">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ news.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ news.category }} | {{ news.date }}</h6>
+        <p class="card-text">{{ news.content }}</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  news: Object
+})
+</script>
+
+
+===== ./src/components/Register.vue =====
+<template>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <!-- API Status Alert -->
+        <div v-if="apiStatus" :class="['alert', apiStatus.status === 'healthy' ? 'alert-success' : 'alert-danger', 'mt-3']">
+          <strong>API Status:</strong> {{ apiStatus.message }}
+          <div v-if="apiStatus.error" class="mt-2">
+            <strong>Error:</strong> {{ apiStatus.error }}
+          </div>
+        </div>
+
+        <div class="card mt-5">
+          <div class="card-body">
+            <h2 class="card-title text-center mb-4">Register</h2>
+            <form @submit.prevent="handleSubmit">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  v-model="form.username"
+                  required
+                >
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  v-model="form.email"
+                  required
+                >
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  v-model="form.password"
+                  required
+                >
+              </div>
+              <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <select
+                  class="form-select"
+                  id="role"
+                  v-model="form.role"
+                  required
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+            <div v-if="message" :class="['alert', messageType, 'mt-3']">
+              {{ message }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive, onMounted } from 'vue';
+
+const API_URL = 'https://mercury.swin.edu.au/cos30043/s103866373/project/api.php';
+
+const form = reactive({
+  username: '',
+  email: '',
+  password: '',
+  role: 'user'
+});
+
+const message = ref('');
+const messageType = ref('');
+const apiStatus = ref(null);
+
+// Check API health
+const checkApiHealth = async () => {
+  try {
+    const response = await fetch(`${API_URL}?action=health`);
+    const data = await response.json();
+    apiStatus.value = data;
+    console.log('API Health Check:', data);
+  } catch (error) {
+    console.error('API Health Check Error:', error);
+    apiStatus.value = {
+      status: 'unhealthy',
+      message: 'Failed to check API health',
+      error: error.message
+    };
+  }
+};
+
+// Check API health when component mounts
+onMounted(() => {
+  checkApiHealth();
+});
+
+const handleSubmit = async () => {
+  try {
+    console.log('Sending registration request to:', API_URL);
+    console.log('Request payload:', {
+      action: 'register',
+      ...form
+    });
+    
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        action: 'register',
+        ...form
+      })
+    });
+
+    console.log('Response status:', response.status);
+    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+    
+    // Get the raw text first
+    const rawText = await response.text();
+    console.log('Raw response:', rawText);
+    
+    // Try to parse it as JSON
+    let data;
+    try {
+      data = JSON.parse(rawText);
+      console.log('Parsed response data:', data);
+    } catch (parseError) {
+      console.error('JSON Parse Error:', parseError);
+      throw new Error(`Invalid JSON response: ${rawText}`);
+    }
+    
+    if (response.ok) {
+      message.value = data.message || 'Registration successful!';
+      messageType.value = 'alert-success';
+      // Clear form
+      form.username = '';
+      form.email = '';
+      form.password = '';
+      form.role = 'user';
+    } else {
+      message.value = data.error || 'Registration failed';
+      messageType.value = 'alert-danger';
+    }
+  } catch (error) {
+    console.error('Registration error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack
+    });
+    message.value = `Error: ${error.message || 'An error occurred. Please try again.'}`;
+    messageType.value = 'alert-danger';
+  }
+};
+</script>
+
+<style scoped>
+.card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.alert {
+  margin-bottom: 0;
+}
+</style> 
+
+===== ./src/App.vue =====
+<template>
+  <div class="min-vh-100 d-flex flex-column">
+    <!-- Navigation Bar -->
+    <Navbar />
+
+    <!-- Main Content -->
+    <main class="flex-grow-1 py-5">
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer py-3 bg-light border-top">
+      <div class="container text-center">
+        <p class="mb-0">
+          &copy; 2024 TechVision. All rights reserved.
+          <span class="ms-2">
+            <a href="#" class="text-decoration-none me-3">
+              <i class="bi bi-github"></i>
+            </a>
+            <a href="#" class="text-decoration-none me-3">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-decoration-none">
+              <i class="bi bi-linkedin"></i>
+            </a>
+          </span>
+        </p>
+      </div>
+    </footer>
+  </div>
+</template>
+
+<script setup>
+import Navbar from './components/Navbar.vue'
+</script>
+
+<style>
+/* Only keeping styles that can't be handled by Bootstrap */
+.nav-link:hover {
+  color: #0d6efd !important;
+}
+
+.nav-link.active {
+  color: #0d6efd !important;
+}
+
+/* Page Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
+
+

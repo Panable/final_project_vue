@@ -1,0 +1,39 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// src/components/Register.vue (script setup, excerpt)}
+\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{handleSubmit}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{async}\PYG{+w}{ }\PYG{p}{()}\PYG{+w}{ }\PYG{p}{=\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k}{try}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{response}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{await}\PYG{+w}{ }\PYG{n+nx}{fetch}\PYG{p}{(}\PYG{n+nx}{API\PYGZus{}URL}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n+nx}{method}\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}POST\PYGZsq{}}\PYG{p}{,}
+\PYG{+w}{      }\PYG{n+nx}{headers}\PYG{o}{:}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{l+s+s1}{\PYGZsq{}Content\PYGZhy{}Type\PYGZsq{}}\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}application/json\PYGZsq{}}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{},}
+\PYG{+w}{      }\PYG{n+nx}{body}\PYG{o}{:}\PYG{+w}{ }\PYG{n+nb}{JSON}\PYG{p}{.}\PYG{n+nx}{stringify}\PYG{p}{(\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nx}{action}\PYG{o}{:}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}register\PYGZsq{}}\PYG{p}{,}
+\PYG{+w}{        }\PYG{p}{...}\PYG{n+nx}{form}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{})}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{});}
+\PYG{+w}{    }\PYG{k+kd}{const}\PYG{+w}{ }\PYG{n+nx}{rawText}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{await}\PYG{+w}{ }\PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{text}\PYG{p}{();}
+\PYG{+w}{    }\PYG{k+kd}{let}\PYG{+w}{ }\PYG{n+nx}{data}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{try}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n+nx}{data}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nb}{JSON}\PYG{p}{.}\PYG{n+nx}{parse}\PYG{p}{(}\PYG{n+nx}{rawText}\PYG{p}{);}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{catch}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{parseError}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{k}{throw}\PYG{+w}{ }\PYG{o+ow}{new}\PYG{+w}{ }\PYG{n+ne}{Error}\PYG{p}{(}\PYG{l+s+sb}{`Invalid JSON response: }\PYG{l+s+si}{\PYGZdl{}\PYGZob{}}\PYG{n+nx}{rawText}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+sb}{`}\PYG{p}{);}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{ok}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n+nx}{message}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{data}\PYG{p}{.}\PYG{n+nx}{message}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}Registration successful!\PYGZsq{}}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n+nx}{messageType}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}alert\PYGZhy{}success\PYGZsq{}}\PYG{p}{;}
+\PYG{+w}{      }\PYG{c+c1}{// Clear form}
+\PYG{+w}{      }\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{username}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{email}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{password}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n+nx}{form}\PYG{p}{.}\PYG{n+nx}{role}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}user\PYGZsq{}}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n+nx}{message}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n+nx}{data}\PYG{p}{.}\PYG{n+nx}{error}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}Registration failed\PYGZsq{}}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n+nx}{messageType}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}alert\PYGZhy{}danger\PYGZsq{}}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{catch}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nx}{error}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{n+nx}{message}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+sb}{`Error: }\PYG{l+s+si}{\PYGZdl{}\PYGZob{}}\PYG{n+nx}{error}\PYG{p}{.}\PYG{n+nx}{message}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}An error occurred. Please try again.\PYGZsq{}}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+sb}{`}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n+nx}{messageType}\PYG{p}{.}\PYG{n+nx}{value}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}alert\PYGZhy{}danger\PYGZsq{}}\PYG{p}{;}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{};}
+\end{Verbatim}
