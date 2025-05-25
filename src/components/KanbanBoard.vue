@@ -38,12 +38,7 @@
             @change="onChange"
           >
             <template #item="{ element }">
-              <div class="card mb-2 shadow-sm" :class="'border-start border-4 border-' + getTagColor(element.tag)">
-                <div class="card-body py-2">
-                  <h5 class="card-title mb-2">{{ element.title }}</h5>
-                  <span class="badge" :class="'bg-' + getTagColor(element.tag)">{{ element.tag }}</span>
-                </div>
-              </div>
+              <TaskCard :task="element" />
             </template>
           </draggable>
         </div>
@@ -60,12 +55,7 @@
             @change="onChange"
           >
             <template #item="{ element }">
-              <div class="card mb-2 shadow-sm" :class="'border-start border-4 border-' + getTagColor(element.tag)">
-                <div class="card-body py-2">
-                  <h5 class="card-title mb-2">{{ element.title }}</h5>
-                  <span class="badge" :class="'bg-' + getTagColor(element.tag)">{{ element.tag }}</span>
-                </div>
-              </div>
+              <TaskCard :task="element" />
             </template>
           </draggable>
         </div>
@@ -82,12 +72,7 @@
             @change="onChange"
           >
             <template #item="{ element }">
-              <div class="card mb-2 shadow-sm" :class="'border-start border-4 border-' + getTagColor(element.tag)">
-                <div class="card-body py-2">
-                  <h5 class="card-title mb-2">{{ element.title }}</h5>
-                  <span class="badge" :class="'bg-' + getTagColor(element.tag)">{{ element.tag }}</span>
-                </div>
-              </div>
+              <TaskCard :task="element" />
             </template>
           </draggable>
         </div>
@@ -99,6 +84,7 @@
 <script setup>
 import { ref } from 'vue'
 import draggable from 'vuedraggable'
+import TaskCard from './TaskCard.vue'
 
 // Task state
 const backlog = ref([])
