@@ -23,7 +23,10 @@
         <ul class="navbar-nav">
           <template v-if="isLoggedIn">
             <li class="nav-item">
-              <span class="nav-link">{{ username }}</span>
+              <span class="nav-link">
+                {{ username }}
+                <span v-if="isAdmin" class="badge bg-primary ms-1">Admin</span>
+              </span>
             </li>
             <li class="nav-item">
               <button class="btn btn-link nav-link" @click="logout">Logout</button>
@@ -52,50 +55,42 @@ const router = useRouter()
 const route = useRoute()
 const isLoggedIn = ref(false)
 const username = ref('')
+const isAdmin = ref(false)
 
 const checkAuthStatus = async () => {
   try {
-    const response = await fetch(`${getUrl('api.php')}?action=current_user`)
+    const response = await fetch(`${getUrl('api.php')}?action=current_user`, {
+      credentials: 'include'
+    })
     const data = await response.json()
-    if (data.user) {
-      isLoggedIn.value = true
-      username.value = data.user.username
-    } else {
-      isLoggedIn.value = false
-      username.value = ''
-    }
+    isLoggedIn.value = !!data.user
+    username.value = data.user?.username || ''
+    isAdmin.value = data.user?.role === 'admin'
   } catch (error) {
-    console.error('Error checking auth status:', error)
+    console.error('Auth check failed:', error)
     isLoggedIn.value = false
     username.value = ''
+    isAdmin.value = false
   }
 }
 
-// Check auth status on mount
+// Check auth status on mount and route changes
 onMounted(checkAuthStatus)
-
-// Watch for route changes to update auth status
 watch(() => route.path, checkAuthStatus)
 
 const logout = async () => {
   try {
-    console.log('Attempting logout...')
     const response = await fetch(getUrl('api.php'), {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        action: 'logout'
-      })
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ action: 'logout' })
     })
-    
     const data = await response.json()
-    console.log('Logout response:', data)
-    
     if (data.success) {
       isLoggedIn.value = false
       username.value = ''
+      isAdmin.value = false
       router.push('/login')
     }
   } catch (error) {

@@ -21,14 +21,9 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-start mb-3">
               <h3 class="card-title h5 mb-0">{{ post.title }}</h3>
-              <div v-if="isAdmin" class="dropdown">
-                <button class="btn btn-link text-dark p-0" data-bs-toggle="dropdown">
-                  <i class="bi bi-three-dots-vertical"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><button class="dropdown-item" @click="editPost(post)">Edit</button></li>
-                  <li><button class="dropdown-item text-danger" @click="deletePost(post.id)">Delete</button></li>
-                </ul>
+              <div v-if="isAdmin" class="d-flex">
+                <button class="btn btn-sm btn-outline-primary me-2" @click="editPost(post)">Edit</button>
+                <button class="btn btn-sm btn-outline-danger" @click="deletePost(post.id)">Delete</button>
               </div>
             </div>
             <p class="card-text">{{ post.content }}</p>
@@ -87,9 +82,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import Pagination from './Pagination.vue'
 import { getUrl } from '../utils/url'
+import { Modal, Dropdown } from 'bootstrap'
 
 const API_URL = getUrl('api.php')
 const posts = ref([])
@@ -105,11 +101,13 @@ onMounted(async () => {
   // Initialize Bootstrap modal
   const modalElement = document.getElementById('postModal')
   if (modalElement) {
-    postModal = new bootstrap.Modal(modalElement)
+    postModal = new Modal(modalElement)
   }
   
   // Check if user is admin
-  const response = await fetch(`${API_URL}?action=current_user`)
+  const response = await fetch(`${API_URL}?action=current_user`, {
+    credentials: 'include'
+  })
   const data = await response.json()
   isAdmin.value = data.user?.role === 'admin'
   
@@ -119,10 +117,16 @@ onMounted(async () => {
 
 const loadPosts = async () => {
   try {
-    const response = await fetch(`${API_URL}?action=posts`)
+    const response = await fetch(`${API_URL}?action=posts`, {
+      credentials: 'include'
+    })
     const data = await response.json()
     if (data.success) {
       posts.value = data.posts
+      await nextTick()
+      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
+        new Dropdown(el)
+      })
     }
   } catch (error) {
     console.error('Error loading posts:', error)
@@ -144,6 +148,7 @@ const toggleLike = async (post) => {
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({
         action: 'toggle_like',
         post_id: post.id
@@ -173,6 +178,7 @@ const deletePost = async (id) => {
     const response = await fetch(API_URL, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({
         action: 'delete_post',
         id
@@ -181,6 +187,10 @@ const deletePost = async (id) => {
     const data = await response.json()
     if (data.success) {
       posts.value = posts.value.filter(p => p.id !== id)
+      await nextTick()
+      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
+        new Dropdown(el)
+      })
     }
   } catch (error) {
     console.error('Error deleting post:', error)
@@ -203,6 +213,7 @@ const savePost = async () => {
     const response = await fetch(API_URL, {
       method,
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify(body)
     })
     
@@ -211,10 +222,14 @@ const savePost = async () => {
       if (postModal) {
         postModal.hide()
       }
-      loadPosts() // Reload posts to get fresh data
+      await loadPosts() // Reload posts to get fresh data
       postForm.value = { title: '', content: '' }
       editingPost.value = null
       showCreateModal.value = false
+      await nextTick()
+      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
+        new Dropdown(el)
+      })
     }
   } catch (error) {
     console.error('Error saving post:', error)
