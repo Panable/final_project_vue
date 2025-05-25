@@ -1,0 +1,84 @@
+{
+  "news": [
+    {
+      "id": 1,
+      "title": "Vue.js 3.4 Released with Performance Improvements",
+      "content": "The latest version of Vue.js brings significant performance improvements and new features for developers. The update focuses on better TypeScript support and enhanced reactivity system.",
+      "date": "2024-03-15",
+      "category": "Frontend",
+      "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c"
+    },
+    {
+      "id": 2,
+      "title": "AI Breakthrough in Natural Language Processing",
+      "content": "Researchers have developed a new AI model that can understand and generate human language with unprecedented accuracy. This breakthrough could revolutionize how we interact with technology.",
+      "date": "2024-03-14",
+      "category": "Artificial Intelligence",
+      "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995"
+    },
+    {
+      "id": 3,
+      "title": "Web Development Trends for 2024",
+      "content": "From WebAssembly to Edge Computing, discover the most important web development trends that will shape the industry in 2024 and beyond.",
+      "date": "2024-03-13",
+      "category": "Web Development",
+      "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6"
+    },
+    {
+      "id": 4,
+      "title": "New JavaScript Features Coming in ES2024",
+      "content": "The upcoming ECMAScript specification brings exciting new features to JavaScript, including improved pattern matching and better async programming capabilities.",
+      "date": "2024-03-12",
+      "category": "JavaScript",
+      "image": "https://images.unsplash.com/photo-1555066931-bf19f8fd8865"
+    },
+    {
+      "id": 5,
+      "title": "Cybersecurity Best Practices for Web Applications",
+      "content": "Learn about the latest security measures and best practices to protect your web applications from common vulnerabilities and attacks.",
+      "date": "2024-03-11",
+      "category": "Security",
+      "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b"
+    },
+    {
+      "id": 6,
+      "title": "The Rise of Progressive Web Apps",
+      "content": "Progressive Web Apps are becoming increasingly popular as they combine the best features of web and mobile applications. Learn how to build your first PWA.",
+      "date": "2024-03-10",
+      "category": "Web Development",
+      "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f"
+    },
+    {
+      "id": 7,
+      "title": "Cloud Computing Trends in 2024",
+      "content": "Explore the latest trends in cloud computing, from serverless architecture to edge computing, and how they're transforming the industry.",
+      "date": "2024-03-09",
+      "category": "Cloud Computing",
+      "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8"
+    },
+    {
+      "id": 8,
+      "title": "Building Accessible Web Applications",
+      "content": "A comprehensive guide to creating web applications that are accessible to all users, including those with disabilities.",
+      "date": "2024-03-08",
+      "category": "Web Development",
+      "image": "https://images.unsplash.com/photo-1551434678-e076c223a692"
+    },
+    {
+      "id": 9,
+      "title": "The Future of Mobile Development",
+      "content": "Discover how cross-platform frameworks and new technologies are shaping the future of mobile application development.",
+      "date": "2024-03-07",
+      "category": "Mobile Development",
+      "image": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c"
+    },
+    {
+      "id": 10,
+      "title": "Data Visualization Best Practices",
+      "content": "Learn how to create effective and engaging data visualizations that help users understand complex information.",
+      "date": "2024-03-06",
+      "category": "Data Science",
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71"
+    }
+  ]
+}
