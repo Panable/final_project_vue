@@ -82,7 +82,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import Pagination from './Pagination.vue'
 import { getUrl } from '../utils/url'
 import { Modal, Dropdown } from 'bootstrap'
@@ -123,10 +123,6 @@ const loadPosts = async () => {
     const data = await response.json()
     if (data.success) {
       posts.value = data.posts
-      await nextTick()
-      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
-        new Dropdown(el)
-      })
     }
   } catch (error) {
     console.error('Error loading posts:', error)
@@ -187,10 +183,6 @@ const deletePost = async (id) => {
     const data = await response.json()
     if (data.success) {
       posts.value = posts.value.filter(p => p.id !== id)
-      await nextTick()
-      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
-        new Dropdown(el)
-      })
     }
   } catch (error) {
     console.error('Error deleting post:', error)
@@ -226,10 +218,6 @@ const savePost = async () => {
       postForm.value = { title: '', content: '' }
       editingPost.value = null
       showCreateModal.value = false
-      await nextTick()
-      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
-        new Dropdown(el)
-      })
     }
   } catch (error) {
     console.error('Error saving post:', error)
