@@ -1,75 +1,7 @@
 <template>
   <div class="min-vh-100 d-flex flex-column">
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-3">
-      <div class="container">
-        <router-link class="navbar-brand fw-semibold fs-4" to="/">
-          <i class="bi bi-cpu"></i> TechVision
-        </router-link>
-        
-        <button 
-          class="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <router-link 
-                class="nav-link fw-medium px-3" 
-                :class="{ active: $route.path === '/' }" 
-                to="/"
-              >
-                <i class="bi bi-house"></i> Home
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link 
-                class="nav-link fw-medium px-3" 
-                :class="{ active: $route.path === '/news' }" 
-                to="/news"
-              >
-                <i class="bi bi-newspaper"></i> News
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link 
-                class="nav-link fw-medium px-3" 
-                :class="{ active: $route.path === '/about' }" 
-                to="/about"
-              >
-                <i class="bi bi-info-circle"></i> About
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link 
-                class="nav-link fw-medium px-3" 
-                :class="{ active: $route.path === '/apply' }" 
-                to="/apply"
-              >
-                <i class="bi bi-person-plus"></i> Apply
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link 
-                class="nav-link fw-medium px-3" 
-                :class="{ active: $route.path === '/register' }" 
-                to="/register"
-              >
-                <i class="bi bi-person-plus-fill"></i> Register
-              </router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Navbar />
 
     <!-- Main Content -->
     <main class="flex-grow-1 py-5">
@@ -103,7 +35,7 @@
 </template>
 
 <script setup>
-// Root App component, routing handled by <router-view>
+import Navbar from './components/Navbar.vue'
 </script>
 
 <style>
