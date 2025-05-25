@@ -2,15 +2,100 @@
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-lg-8">
+        <!-- Name Input Section -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-body p-4">
+            <h3 class="card-title mb-4">Welcome to TechVision</h3>
+            
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="firstName" 
+                    v-model="firstName"
+                    placeholder="First Name"
+                  >
+                  <label for="firstName">First Name</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="lastName" 
+                    v-model="lastName"
+                    placeholder="Last Name"
+                  >
+                  <label for="lastName">Last Name</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Welcome Message -->
+            <div v-if="firstName || lastName" class="alert alert-primary mt-4 animate__animated animate__fadeIn">
+              <h4 class="alert-heading mb-0">
+                Welcome{{ firstName ? ', ' + firstName : '' }}{{ lastName ? ' ' + lastName : '' }}!
+              </h4>
+            </div>
+
+            <!-- Theme Selection -->
+            <div class="mt-4">
+              <label class="form-label">Choose Your Theme</label>
+              <div class="d-flex gap-3">
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    id="mountain" 
+                    value="mountain" 
+                    v-model="selectedImage"
+                  >
+                  <label class="form-check-label" for="mountain">
+                    <i class="bi bi-mountain"></i> Mountain
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    id="ocean" 
+                    value="ocean" 
+                    v-model="selectedImage"
+                  >
+                  <label class="form-check-label" for="ocean">
+                    <i class="bi bi-water"></i> Ocean
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Selected Image Display -->
+            <div v-if="selectedImage" class="position-relative rounded-3 overflow-hidden mt-4">
+              <img 
+                :src="imageSrc" 
+                :alt="selectedImage" 
+                class="img-fluid shadow-sm"
+              >
+              <div class="position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-75 text-white p-4">
+                <h4 class="mb-1">{{ selectedImage === 'mountain' ? 'Mountain View' : 'Ocean View' }}</h4>
+                <p class="mb-0">{{ selectedImage === 'mountain' ? 'Explore the heights of technology' : 'Dive into the depths of innovation' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- About Section -->
-        <div class="bg-light rounded-3 p-4 mb-5">
+        <div class="bg-light rounded-3 p-4">
           <h2 class="display-4 mb-4">About TechVision</h2>
           <p class="lead mb-4">
             TechVision is your premier destination for staying informed about the latest technological advancements, 
             industry trends, and digital innovations. Our platform brings together tech enthusiasts, professionals, 
             and curious minds in a vibrant community focused on the future of technology.
           </p>
-          <div class="row g-4 mb-4">
+          <div class="row g-4">
             <div class="col-md-4">
               <div class="card h-100 shadow-sm hover-shadow">
                 <div class="card-body text-center p-4">
@@ -40,91 +125,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Interactive Section -->
-        <div class="card shadow-sm">
-          <div class="card-body p-4">
-            <h3 class="card-title mb-4">Personalize Your Experience</h3>
-            
-            <form @submit.prevent="handleSubmit" class="mb-4">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="firstName" 
-                      v-model="firstName"
-                      placeholder="First Name"
-                      required
-                    >
-                    <label for="firstName">First Name</label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="lastName" 
-                      v-model="lastName"
-                      placeholder="Last Name"
-                      required
-                    >
-                    <label for="lastName">Last Name</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-4">
-                <label class="form-label">Choose Your Theme</label>
-                <div class="d-flex gap-3">
-                  <div class="form-check">
-                    <input 
-                      class="form-check-input" 
-                      type="radio" 
-                      id="mountain" 
-                      value="mountain" 
-                      v-model="selectedImage"
-                    >
-                    <label class="form-check-label" for="mountain">
-                      <i class="bi bi-mountain"></i> Mountain
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input 
-                      class="form-check-input" 
-                      type="radio" 
-                      id="ocean" 
-                      value="ocean" 
-                      v-model="selectedImage"
-                    >
-                    <label class="form-check-label" for="ocean">
-                      <i class="bi bi-water"></i> Ocean
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div v-if="showWelcome" class="alert alert-success mt-4 animate__animated animate__fadeIn">
-                <h4 class="alert-heading">Welcome, {{ firstName }} {{ lastName }}!</h4>
-                <p class="mb-0">Thank you for joining our tech community. We're excited to have you here!</p>
-              </div>
-            </form>
-
-            <div v-if="selectedImage" class="position-relative rounded-3 overflow-hidden">
-              <img 
-                :src="imageSrc" 
-                :alt="selectedImage" 
-                class="img-fluid shadow-sm"
-              >
-              <div class="position-absolute bottom-0 start-0 end-0 bg-dark bg-opacity-75 text-white p-4">
-                <h4 class="mb-1">{{ selectedImage === 'mountain' ? 'Mountain View' : 'Ocean View' }}</h4>
-                <p class="mb-0">{{ selectedImage === 'mountain' ? 'Explore the heights of technology' : 'Dive into the depths of innovation' }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -136,17 +136,12 @@ import { ref, computed } from 'vue'
 const firstName = ref('')
 const lastName = ref('')
 const selectedImage = ref('')
-const showWelcome = ref(false)
 
 const imageSrc = computed(() => {
   return selectedImage.value === 'mountain'
     ? 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b'
     : 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e'
 })
-
-const handleSubmit = () => {
-  showWelcome.value = true
-}
 </script>
 
 <style scoped>

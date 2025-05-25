@@ -48,6 +48,15 @@
                 <i class="bi bi-info-circle"></i> About
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link 
+                class="nav-link fw-medium px-3" 
+                :class="{ active: $route.path === '/apply' }" 
+                to="/apply"
+              >
+                <i class="bi bi-person-plus"></i> Apply
+              </router-link>
+            </li>
           </ul>
         </div>
       </div>
