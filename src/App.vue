@@ -57,6 +57,15 @@
                 <i class="bi bi-person-plus"></i> Apply
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link 
+                class="nav-link fw-medium px-3" 
+                :class="{ active: $route.path === '/register' }" 
+                to="/register"
+              >
+                <i class="bi bi-person-plus-fill"></i> Register
+              </router-link>
+            </li>
           </ul>
         </div>
       </div>
