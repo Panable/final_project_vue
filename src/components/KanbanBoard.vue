@@ -51,11 +51,10 @@
 <script setup>
 import { ref } from 'vue'
 import KanbanColumn from './KanbanColumn.vue'
+import { useTaskStore } from '../stores/taskStore'
 
-// Task state
-const backlog = ref([])
-const inProgress = ref([])
-const done = ref([])
+// Get tasks from store
+const { backlog, inProgress, done } = useTaskStore()
 
 // New task form
 const newTask = ref({
